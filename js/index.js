@@ -3,6 +3,8 @@ const 정답 = "APPLE";
 let attempts = 0; // 시도한 횟수 (row 순서)
 let index = 0; // column 순서
 
+let timer;
+
 /* 키보드를 입력하는 이벤트 */
 function appStart() {
     // 게임 종료시 뜨는 화면
@@ -17,6 +19,7 @@ function appStart() {
     const gameover = () => {
         window.removeEventListener("keydown", handleKeydown);
         displayGameover();
+        clearInterval(timer);
     };
 
     // 다음줄로 넘기기
@@ -66,8 +69,6 @@ function appStart() {
             `.board-column[data-index="${attempts}${index}"]`
         );
 
-        console.log(index);
-        
         if (event.key === 'Backspace') handleBackspace();
         else if (index === 5) {
             if (event.key === "Enter") handleEnterKey();        
@@ -79,6 +80,24 @@ function appStart() {
         }
     };
 
+    // 타이머
+    const startTimer = () => {
+        const 시작_시간 = new Date();
+
+        function setTime() {
+            const 현재_시간 = new Date();
+            const 흐른_시간 = new Date(현재_시간 - 시작_시간);
+            const 분 = 흐른_시간.getMinutes().toString().padStart(2, "0");
+            const 초 = 흐른_시간.getSeconds().toString().padStart(2, "0");
+            const timerDiv = document.querySelector("#timer");
+            timerDiv.innerText = `${분}:${초}`
+        }
+
+        timer = setInterval(setTime, 1000); // setInterval의 ID가 리턴됨(몇 번째 돌고있는지)
+    };
+
+
+    startTimer();
     window.addEventListener("keydown", handleKeydown);
 }
 
