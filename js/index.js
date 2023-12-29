@@ -13,6 +13,8 @@ function appStart() {
         div.innerText = "게임이 종료됐습니다.";
         div.style = "display:flex; justify-content:center; align-items:center; position:absolute; top:50%; margin:0 auto; background-color:white; width:300px; height:100px; border:5px solid red; font-weight:bold;";
         document.body.appendChild(div);
+
+        div.className = 'correct';
     };
 
     // 게임 종료 (이벤트 삭제)
