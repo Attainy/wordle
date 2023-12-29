@@ -1,4 +1,4 @@
-const 정답 = "APPLE";
+// const 정답 = "APPLE";
 
 let attempts = 0; // 시도한 횟수 (row 순서)
 let index = 0; // column 순서
@@ -42,8 +42,14 @@ function appStart() {
         if (index !== 0) index -= 1;
     };
 
-    const handleEnterKey = () => {
+    // 정답 확인
+    const handleEnterKey = async () => {
         let 맞은_개수 = 0;
+
+        /* API(서버)에서 정답 받아오기 */
+        const 응답 = await fetch('/answer'); // answer 경로로 서버에 요청 보냄
+        const 정답_객체 = await 응답.json();
+        const 정답 = 정답_객체.answer;
 
         for (let i=0; i<5; i++) {
             const block = document.querySelector(
