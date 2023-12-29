@@ -47,14 +47,31 @@ function appStart() {
             const block = document.querySelector(
                 `.board-column[data-index="${attempts}${i}"]`
             );
-            
+
             const 입력한_글자 = block.innerText;
             const 정답_글자 = 정답[i];
+
+
+            /* Keyboard 요소 선택 */
+            const keyboardBlock = document.querySelector(
+                `.keyboard-column[data-key="${입력한_글자.toUpperCase()}"]`
+            );
+
             if (입력한_글자 === 정답_글자) {
                 맞은_개수 += 1;
                 block.style.backgroundColor = "#6aaa64";
-            } else if (정답.includes(입력한_글자)) block.style.backgroundColor = "#c9b458";
-            else block.style.backgroundColor = "#787c7e";
+                /* 키보드 색 바꾸기 */
+                keyboardBlock.style.backgroundColor = '#6aaa64';
+            } else if (정답.includes(입력한_글자)) {
+                block.style.backgroundColor = "#c9b458";
+                /* 키보드 색 바꾸기 */
+                keyboardBlock.style.backgroundColor = "#c9b458";
+            }
+            else {
+                block.style.backgroundColor = "#787c7e";
+                /* 키보드 색 바꾸기 */
+                keyboardBlock.style.backgroundColor = '#787c7e';
+            }
             block.style.color = "white";
         }
 
@@ -68,6 +85,8 @@ function appStart() {
         const thisBlock = document.querySelector(
             `.board-column[data-index="${attempts}${index}"]`
         );
+
+
 
         if (event.key === 'Backspace') handleBackspace();
         else if (index === 5) {
