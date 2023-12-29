@@ -86,8 +86,6 @@ function appStart() {
             `.board-column[data-index="${attempts}${index}"]`
         );
 
-
-
         if (event.key === 'Backspace') handleBackspace();
         else if (index === 5) {
             if (event.key === "Enter") handleEnterKey();        
@@ -98,6 +96,23 @@ function appStart() {
             index += 1;
         }
     };
+
+    /* Keyboard 클릭시 */
+    const handleKeyClick = (keyName) => {
+        const thisBlock = document.querySelector(
+            `.board-column[data-index="${attempts}${index}"]`
+        );
+
+        if (keyName === 'BACK') handleBackspace();
+        else if (index === 5) {
+            if (keyName=== "ENTER") handleEnterKey();
+            else return; // Enter가 아닌 다른 키가 눌리면 그냥두기
+        }   else if (keyName !== 'ENTER' && keyName !== 'BACK') {
+            thisBlock.innerText = keyName;
+            thisBlock.style.borderColor = "black";
+            index += 1;
+        }
+    }
 
     // 타이머
     const startTimer = () => {
@@ -118,6 +133,15 @@ function appStart() {
 
     startTimer();
     window.addEventListener("keydown", handleKeydown);
+    /* 키보드 클릭 이벤트 */
+    const all_key = document.querySelectorAll("div.keyboard-column");
+
+    for (let kb of all_key) {
+        let keyName = kb.getAttribute("data-key");
+        kb.addEventListener("click", () => {
+            handleKeyClick(keyName);
+        });
+    }
 }
 
 appStart();
